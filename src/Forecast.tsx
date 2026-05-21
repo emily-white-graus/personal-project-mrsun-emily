@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
 
 import Card from "./Card"
+import { type Location, type SunForecastData, fetchSunForecast } from "./sunApi"
 
 const formatDay = (value: string): string => {
   return new Date(value).toLocaleDateString([], { weekday: "short" })
@@ -15,43 +16,13 @@ const formatTime = (value: string): string => {
 }
 
 const Forecast: React.FC<{
-  location: {
-    name: string
-    latitude: number
-    longitude: number
-  }
+  location: Location
 }> = ({ location }) => {
-  const [data, setData] = useState<
-    Array<{
-      day: string
-      sunrise: string
-      sunset: string
-    }>
-  >()
+  const [data, setData] = useState<SunForecastData>()
 
   useEffect(() => {
     void (async () => {
-      const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset&timezone=auto`,
-      )
-      const data = (await response.json()) as {
-        daily: {
-          time: string[]
-          sunrise: string[]
-          sunset: string[]
-        }
-      }
-
-      const forecast = []
-      for (let i = 0; i < data.daily.time.length; i++) {
-        forecast.push({
-          day: data.daily.time[i],
-          sunrise: data.daily.sunrise[i],
-          sunset: data.daily.sunset[i],
-        })
-      }
-
-      setData(forecast)
+      setData(await fetchSunForecast(location))
     })()
   }, [location])
 

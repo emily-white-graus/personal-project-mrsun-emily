@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
 import Card from "./Card"
+import { type CurrentSunData, type Location, fetchCurrentSun } from "./sunApi"
 
 const formatTime = (value?: string): string => {
   if (value === undefined) {
@@ -26,39 +27,13 @@ const formatDuration = (seconds?: number): string => {
 }
 
 const CurrentSun: React.FC<{
-  location: {
-    name: string
-    latitude: number
-    longitude: number
-  }
+  location: Location
 }> = ({ location }) => {
-  const [data, setData] = useState<{
-    sunrise: string
-    sunset: string
-    daylight: number
-    sunshine: number
-  }>()
+  const [data, setData] = useState<CurrentSunData>()
 
   useEffect(() => {
     void (async () => {
-      const response = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset,daylight_duration,sunshine_duration&timezone=auto&forecast_days=1`,
-      )
-      const data = (await response.json()) as {
-        daily: {
-          sunrise: string[]
-          sunset: string[]
-          daylight_duration: number[]
-          sunshine_duration: number[]
-        }
-      }
-
-      setData({
-        sunrise: data.daily.sunrise[0],
-        sunset: data.daily.sunset[0],
-        daylight: data.daily.daylight_duration[0],
-        sunshine: data.daily.sunshine_duration[0],
-      })
+      setData(await fetchCurrentSun(location))
     })()
   }, [location])
 
