@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { ScrollView, StyleSheet, Text, View } from "react-native"
 
-import Card from "./Card"
+import Card from "../design/Card"
+
 import { type Location, type SunForecastData, fetchSunForecast } from "./sunApi"
 
 const formatDay = (value: string): string => {
@@ -15,7 +16,7 @@ const formatTime = (value: string): string => {
   })
 }
 
-const Forecast: React.FC<{
+export const Forecast: React.FC<{
   location: Location
 }> = ({ location }) => {
   const [data, setData] = useState<SunForecastData>()
@@ -41,8 +42,6 @@ const Forecast: React.FC<{
     </Card>
   )
 }
-
-export default Forecast
 
 const styles = StyleSheet.create({
   title: {

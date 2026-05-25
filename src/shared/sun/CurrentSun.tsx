@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, Text, View } from "react-native"
 
-import Card from "./Card"
+import Card from "../design/Card"
+
 import { type CurrentSunData, type Location, fetchCurrentSun } from "./sunApi"
 
 const formatTime = (value?: string): string => {
@@ -26,7 +27,7 @@ const formatDuration = (seconds?: number): string => {
   return `${hours}h ${minutes}m`
 }
 
-const CurrentSun: React.FC<{
+export const CurrentSun: React.FC<{
   location: Location
 }> = ({ location }) => {
   const [data, setData] = useState<CurrentSunData>()
@@ -62,8 +63,6 @@ const CurrentSun: React.FC<{
     </Card>
   )
 }
-
-export default CurrentSun
 
 const styles = StyleSheet.create({
   current: { alignItems: "center", marginBottom: 24 },

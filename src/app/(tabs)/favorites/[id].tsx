@@ -1,8 +1,7 @@
 import { Stack, useLocalSearchParams } from "expo-router"
 import { StyleSheet, View } from "react-native"
 
-import CurrentSun from "../../../CurrentSun"
-import Forecast from "../../../Forecast"
+import { CurrentSun, Forecast } from "../../../shared/sun"
 
 const location = { name: "Reno", latitude: 39.5299, longitude: 119.8143 }
 

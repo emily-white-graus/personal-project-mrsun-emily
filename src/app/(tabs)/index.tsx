@@ -1,8 +1,7 @@
 import { Link } from "expo-router"
 import { StyleSheet, Text, View } from "react-native"
 
-import CurrentSun from "../../CurrentSun"
-import Forecast from "../../Forecast"
+import { CurrentSun, Forecast } from "../../shared/sun"
 
 const location = { name: "Barcelona", latitude: 41.385063, longitude: 2.173404 }
 
