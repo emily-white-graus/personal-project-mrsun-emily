@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 
-import Card from "../design/Card"
+import Card from "#design/elements/Card"
+import Typography from "#design/elements/Typography"
+import { spacing } from "#design/foundations"
 
 import { type CurrentSunData, type Location, fetchCurrentSun } from "./sunApi"
 
@@ -41,23 +43,27 @@ export const CurrentSun: React.FC<{
   return (
     <Card>
       <View style={styles.current}>
-        <Text style={styles.sunset}>{formatTime(data?.sunset)}</Text>
-        <Text style={styles.location}>{location.name}</Text>
-        <Text style={styles.label}>Sunset today</Text>
+        <Typography variant="title">{formatTime(data?.sunset)}</Typography>
+        <Typography variant="muted">{location.name}</Typography>
+        <Typography variant="label">Sunset today</Typography>
       </View>
 
       <View style={styles.stats}>
         <View style={styles.stat}>
-          <Text style={styles.statValue}>{formatTime(data?.sunrise)}</Text>
-          <Text style={styles.statLabel}>Sunrise</Text>
+          <Typography variant="large">{formatTime(data?.sunrise)}</Typography>
+          <Typography variant="label">Sunrise</Typography>
         </View>
         <View style={styles.stat}>
-          <Text style={styles.statValue}>{formatDuration(data?.daylight)}</Text>
-          <Text style={styles.statLabel}>Daylight</Text>
+          <Typography variant="large">
+            {formatDuration(data?.daylight)}
+          </Typography>
+          <Typography variant="label">Daylight</Typography>
         </View>
         <View style={styles.stat}>
-          <Text style={styles.statValue}>{formatDuration(data?.sunshine)}</Text>
-          <Text style={styles.statLabel}>Sunshine</Text>
+          <Typography variant="large">
+            {formatDuration(data?.sunshine)}
+          </Typography>
+          <Typography variant="label">Sunshine</Typography>
         </View>
       </View>
     </Card>
@@ -65,12 +71,7 @@ export const CurrentSun: React.FC<{
 }
 
 const styles = StyleSheet.create({
-  current: { alignItems: "center", marginBottom: 24 },
-  sunset: { fontSize: 28 },
-  location: { fontSize: 12, color: "#888" },
-  label: { fontWeight: "bold" },
+  current: { alignItems: "center", marginBottom: spacing.inside },
   stats: { flexDirection: "row" },
   stat: { flex: 1, alignItems: "center" },
-  statValue: { fontSize: 20, fontWeight: "500" },
-  statLabel: { fontSize: 12, color: "#888", marginTop: 2 },
 })

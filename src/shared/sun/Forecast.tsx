@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import { ScrollView, StyleSheet, Text, View } from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 
-import Card from "../design/Card"
+import Card from "#design/elements/Card"
+import Typography from "#design/elements/Typography"
+import { spacing } from "#design/foundations"
 
 import { type Location, type SunForecastData, fetchSunForecast } from "./sunApi"
 
@@ -29,13 +31,15 @@ export const Forecast: React.FC<{
 
   return (
     <Card>
-      <Text style={styles.title}>Sunset forecast</Text>
+      <View style={styles.title}>
+        <Typography variant="label">Sunset forecast</Typography>
+      </View>
       <ScrollView horizontal style={styles.days}>
         {data?.map(({ day, sunrise, sunset }) => (
           <View key={day} style={styles.day}>
-            <Text style={styles.dayLabel}>{formatDay(day)}</Text>
-            <Text style={styles.sunset}>{formatTime(sunset)}</Text>
-            <Text style={styles.sunrise}>{formatTime(sunrise)}</Text>
+            <Typography variant="muted">{formatDay(day)}</Typography>
+            <Typography variant="large">{formatTime(sunset)}</Typography>
+            <Typography variant="muted">{formatTime(sunrise)}</Typography>
           </View>
         ))}
       </ScrollView>
@@ -46,12 +50,8 @@ export const Forecast: React.FC<{
 const styles = StyleSheet.create({
   title: {
     alignSelf: "flex-start",
-    marginBottom: 16,
-    fontWeight: "bold",
+    marginBottom: spacing.between,
   },
   days: { flexGrow: 0, flexDirection: "row" },
-  day: { flex: 1, alignItems: "center", marginHorizontal: 16 },
-  dayLabel: { fontSize: 12, color: "#888", marginBottom: 4 },
-  sunset: { fontSize: 18 },
-  sunrise: { fontSize: 14, color: "#888" },
+  day: { flex: 1, alignItems: "center", marginHorizontal: spacing.between },
 })

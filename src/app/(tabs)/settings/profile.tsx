@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
+
+import Typography from "#design/elements/Typography"
+import { colors } from "#design/foundations"
 
 const App: React.FC = () => {
   return (
     <>
       <View style={styles.container}>
-        <Text>Profile</Text>
+        <Typography variant="title">Profile</Typography>
       </View>
     </>
   )
@@ -15,7 +18,7 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.page,
     alignItems: "center",
     justifyContent: "center",
   },

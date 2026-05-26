@@ -1,5 +1,8 @@
-import { Link, Stack } from "expo-router"
-import { StyleSheet, Text, View } from "react-native"
+import { Stack } from "expo-router"
+import { StyleSheet, View } from "react-native"
+
+import Typography from "#design/elements/Typography"
+import { colors, spacing } from "#design/foundations"
 
 const App: React.FC = () => {
   return (
@@ -7,8 +10,8 @@ const App: React.FC = () => {
       <Stack.Screen options={{ title: "Temporary" }} />
 
       <View style={styles.container}>
-        <Text>Temporary</Text>
-        <Link href="/">Home</Link>
+        <Typography variant="title">Temporary</Typography>
+        <Typography href="/">Home</Typography>
       </View>
     </>
   )
@@ -19,7 +22,8 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    gap: spacing.between / 2,
+    backgroundColor: colors.page,
     alignItems: "center",
     justifyContent: "center",
   },
