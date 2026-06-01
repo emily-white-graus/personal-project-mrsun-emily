@@ -5,7 +5,8 @@ import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
-import { type Location, type SunForecastData, fetchSunForecast } from "./sunApi"
+import { type SunForecastData, fetchSunForecast } from "./sunApi"
+import { type SunLocation } from "./types"
 
 const formatDay = (value: string): string => {
   return new Date(value).toLocaleDateString([], { weekday: "short" })
@@ -19,7 +20,7 @@ const formatTime = (value: string): string => {
 }
 
 export const Forecast: React.FC<{
-  location: Location
+  location: SunLocation
 }> = ({ location }) => {
   const [data, setData] = useState<SunForecastData>()
 

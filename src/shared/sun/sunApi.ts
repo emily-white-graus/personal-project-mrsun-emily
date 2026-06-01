@@ -1,8 +1,4 @@
-export type Location = {
-  name: string
-  latitude: number
-  longitude: number
-}
+import { type SunLocation } from "./types"
 
 export type CurrentSunData = {
   sunrise: string
@@ -18,7 +14,7 @@ export type SunForecastData = Array<{
 }>
 
 export const fetchCurrentSun = async (
-  location: Location,
+  location: SunLocation,
 ): Promise<CurrentSunData> => {
   const response = await fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset,daylight_duration,sunshine_duration&timezone=auto&forecast_days=1`,
@@ -41,7 +37,7 @@ export const fetchCurrentSun = async (
 }
 
 export const fetchSunForecast = async (
-  location: Location,
+  location: SunLocation,
 ): Promise<SunForecastData> => {
   const response = await fetch(
     `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset&timezone=auto`,

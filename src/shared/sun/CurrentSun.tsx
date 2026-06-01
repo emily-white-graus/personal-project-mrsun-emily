@@ -5,7 +5,8 @@ import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
 
-import { type CurrentSunData, type Location, fetchCurrentSun } from "./sunApi"
+import { type CurrentSunData, fetchCurrentSun } from "./sunApi"
+import { type SunLocation } from "./types"
 
 const formatTime = (value?: string): string => {
   if (value === undefined) {
@@ -30,7 +31,7 @@ const formatDuration = (seconds?: number): string => {
 }
 
 export const CurrentSun: React.FC<{
-  location: Location
+  location: SunLocation
 }> = ({ location }) => {
   const [data, setData] = useState<CurrentSunData>()
 
