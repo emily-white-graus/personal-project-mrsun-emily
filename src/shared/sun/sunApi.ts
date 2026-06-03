@@ -11,6 +11,8 @@ export type SunForecastData = Array<{
   day: string
   sunrise: string
   sunset: string
+  daylight: number
+  sunshine: number
 }>
 
 export const fetchCurrentSun = async (
@@ -38,15 +40,18 @@ export const fetchCurrentSun = async (
 
 export const fetchSunForecast = async (
   location: SunLocation,
+  days = 7,
 ): Promise<SunForecastData> => {
   const response = await fetch(
-    `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset&timezone=auto`,
+    `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&daily=sunrise,sunset,daylight_duration,sunshine_duration&timezone=auto&forecast_days=${days}`,
   )
   const data = (await response.json()) as {
     daily: {
       time: string[]
       sunrise: string[]
       sunset: string[]
+      daylight_duration: number[]
+      sunshine_duration: number[]
     }
   }
 
@@ -56,6 +61,8 @@ export const fetchSunForecast = async (
       day: data.daily.time[i],
       sunrise: data.daily.sunrise[i],
       sunset: data.daily.sunset[i],
+      daylight: data.daily.daylight_duration[i],
+      sunshine: data.daily.sunshine_duration[i],
     })
   }
 

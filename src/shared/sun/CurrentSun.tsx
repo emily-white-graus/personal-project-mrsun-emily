@@ -37,7 +37,11 @@ export const CurrentSun: React.FC<{
 
   useEffect(() => {
     void (async () => {
-      setData(await fetchCurrentSun(location))
+      try {
+        setData(await fetchCurrentSun(location))
+      } catch (error) {
+        console.error(error)
+      }
     })()
   }, [location])
 

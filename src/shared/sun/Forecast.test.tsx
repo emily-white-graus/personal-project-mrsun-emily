@@ -10,6 +10,8 @@ describe("Sun > Forecast", () => {
           time: ["2026-06-01"],
           sunrise: ["2026-06-01T06:20"],
           sunset: ["2026-06-01T21:18"],
+          daylight_duration: [53880],
+          sunshine_duration: [42000],
         },
       }),
     } as Response)
@@ -31,5 +33,7 @@ describe("Sun > Forecast", () => {
     )
 
     expect(await findByText("Sunset forecast")).toBeTruthy()
+    expect(await findByText("9/10 Excellent")).toBeTruthy()
+    expect(await findByText(/Best time:/)).toBeTruthy()
   })
 })

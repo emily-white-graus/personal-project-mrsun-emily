@@ -1,4 +1,5 @@
 export * from "./CurrentSun"
 export * from "./Forecast"
+export * from "./sunsetPrediction"
 export * from "./types"
 export * from "./useCurrentLocation"
