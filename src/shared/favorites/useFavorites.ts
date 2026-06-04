@@ -8,6 +8,7 @@ const STORAGE_KEY = "favorites"
 const defaultFavorites: SunLocation[] = [
   { name: "Reno", latitude: 39.5299, longitude: 119.8143 },
   { name: "Barcelona", latitude: 41.385063, longitude: 2.173404 },
+  { name: "Solsona", latitude: 41.99395, longitude: 1.51706 },
 ]
 
 export function useFavorites(): [SunLocation[]] {
@@ -21,10 +22,21 @@ export function useFavorites(): [SunLocation[]] {
         return
       }
 
-      const favorites = JSON.parse(cached) as SunLocation[]
+      const favorites = withDefaultFavorites(
+        JSON.parse(cached) as SunLocation[],
+      )
       setFavorites(favorites)
+      await Storage.setItem(STORAGE_KEY, JSON.stringify(favorites))
     })()
   }, [])
 
   return [favorites]
+}
+
+function withDefaultFavorites(favorites: SunLocation[]): SunLocation[] {
+  const names = new Set(favorites.map((favorite) => favorite.name))
+
+  return favorites.concat(
+    defaultFavorites.filter((favorite) => !names.has(favorite.name)),
+  )
 }

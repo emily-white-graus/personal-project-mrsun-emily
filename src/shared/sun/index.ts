@@ -1,5 +1,7 @@
 export * from "./CurrentSun"
 export * from "./Forecast"
+export { default as LocationSearch } from "./LocationSearch"
+export * from "./searchSunLocations"
 export * from "./sunsetPrediction"
 export * from "./types"
 export * from "./useCurrentLocation"

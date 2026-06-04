@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
@@ -8,45 +7,60 @@ import FormGroup from "#design/elements/FormGroup"
 import Screen from "#design/elements/Screen"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
-import { hapticImpact } from "#shared/haptics"
 import { createNotification } from "#shared/notification"
+import { useSettings, useSettingsSetter } from "#shared/settings"
 
 const App: React.FC = () => {
-  const [name, setName] = useState("MrSun user")
-  const [notifications, setNotifications] = useState(true)
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      void (async () => {
-        await hapticImpact()
-        await createNotification({
-          title: "MrSun",
-          short: "Sunset",
-          body: "Your local sunset time is ready.",
-        })
-      })()
-    }, 2500)
-
-    return () => clearTimeout(timeout)
-  }, [])
+  const settings = useSettings()
+  const setSettings = useSettingsSetter()
 
   return (
     <Screen>
       <View style={styles.header}>
         <Typography variant="title">Profile</Typography>
         <Typography variant="muted">
-          Manage your display name and alerts.
+          Personalize your sunset reminders.
         </Typography>
       </View>
 
       <Card>
         <View style={styles.form}>
-          <FormGroup label="Name">
-            <TextField onChange={setName} value={name} />
+          <FormGroup label="Display Name">
+            <TextField
+              onChange={(value) =>
+                setSettings({
+                  ...settings,
+                  profile: {
+                    ...settings.profile,
+                    name: value,
+                  },
+                })
+              }
+              value={settings.profile.name}
+            />
           </FormGroup>
 
-          <FormGroup label="Alerts">
-            <ToggleField onChange={setNotifications} value={notifications} />
+          <FormGroup label="Sunset Alerts">
+            <ToggleField
+              onChange={(value) => {
+                setSettings({
+                  ...settings,
+                  notifications: {
+                    ...settings.notifications,
+                    enabled: value,
+                  },
+                })
+
+                if (value) {
+                  void createNotification({
+                    title: "MrSun",
+                    short: "Reminder set!",
+                    body: "Reminder set!",
+                  })
+                }
+              }}
+              value={settings.notifications.enabled}
+            />
           </FormGroup>
         </View>
       </Card>

@@ -5,9 +5,13 @@ export type Settings = {
   home: {
     name: string
   }
+  profile: {
+    name: string
+  }
   notifications: {
     enabled: boolean
     favorites: boolean
+    reminderMinutes: number
   }
 }
 
@@ -15,9 +19,13 @@ const defaultSettings: Settings = {
   home: {
     name: "Home",
   },
+  profile: {
+    name: "MrSun user",
+  },
   notifications: {
     enabled: false,
     favorites: true,
+    reminderMinutes: 30,
   },
 }
 
@@ -40,8 +48,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     void Storage.getItem(STORAGE_KEY).then((cached) => {
       if (!cached) return
 
-      const settings = JSON.parse(cached) as Settings
-      setSettings(settings)
+      setSettings(normalizeSettings(JSON.parse(cached) as Partial<Settings>))
     })
   }, [])
 
@@ -71,4 +78,23 @@ export function useSettingsSetter(): (settings: Settings) => void {
   if (!context) throw new Error("Missing SettingsProvider.")
 
   return context.set
+}
+
+function normalizeSettings(settings: Partial<Settings>): Settings {
+  return {
+    ...defaultSettings,
+    ...settings,
+    home: {
+      ...defaultSettings.home,
+      ...settings.home,
+    },
+    profile: {
+      ...defaultSettings.profile,
+      ...settings.profile,
+    },
+    notifications: {
+      ...defaultSettings.notifications,
+      ...settings.notifications,
+    },
+  }
 }

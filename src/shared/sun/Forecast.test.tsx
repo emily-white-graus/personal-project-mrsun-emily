@@ -34,6 +34,6 @@ describe("Sun > Forecast", () => {
 
     expect(await findByText("Sunset forecast")).toBeTruthy()
     expect(await findByText("9/10 Excellent")).toBeTruthy()
-    expect(await findByText(/Best time:/)).toBeTruthy()
+    expect(await findByText(/Goldenhour:/)).toBeTruthy()
   })
 })

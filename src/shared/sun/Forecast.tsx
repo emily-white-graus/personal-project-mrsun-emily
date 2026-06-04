@@ -93,7 +93,7 @@ export const Forecast: React.FC<{
               <View style={styles.dayHeader}>
                 <View>
                   <Typography variant="label">{formatDay(item.day)}</Typography>
-                  <Typography variant="title">
+                  <Typography variant="title" style={styles.sunsetTime}>
                     {formatTime(item.sunset)}
                   </Typography>
                 </View>
@@ -104,11 +104,11 @@ export const Forecast: React.FC<{
                 </View>
               </View>
 
-              <Typography variant="muted">
-                Best time: {formatTime(window.start.toISOString())} -{" "}
+              <Typography variant="caption">
+                Goldenhour: {formatTime(window.start.toISOString())} -{" "}
                 {formatTime(window.end.toISOString())}
               </Typography>
-              <Typography variant="muted">
+              <Typography variant="caption">
                 Sunrise: {formatTime(item.sunrise)}
               </Typography>
             </View>
@@ -124,14 +124,14 @@ const styles = StyleSheet.create({
     maxHeight: 420,
   },
   title: {
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
   },
   list: {
     width: "100%",
   },
   day: {
-    gap: spacing.xs,
-    paddingVertical: spacing.md,
+    gap: 4,
+    paddingVertical: spacing.sm,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
@@ -141,10 +141,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: spacing.md,
   },
+  sunsetTime: {
+    fontSize: 28,
+    lineHeight: 32,
+  },
   rating: {
     flexShrink: 0,
     paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
+    paddingVertical: 6,
     borderRadius: shapes.pillRadius,
     backgroundColor: colors.surface,
   },
