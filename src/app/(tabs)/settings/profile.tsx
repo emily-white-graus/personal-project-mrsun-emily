@@ -7,6 +7,7 @@ import FormGroup from "#design/elements/FormGroup"
 import Screen from "#design/elements/Screen"
 import Typography from "#design/elements/Typography"
 import { spacing } from "#design/foundations"
+import { hapticImpact } from "#shared/haptics"
 import { createNotification } from "#shared/notification"
 import { useSettings, useSettingsSetter } from "#shared/settings"
 
@@ -52,6 +53,7 @@ const App: React.FC = () => {
                 })
 
                 if (value) {
+                  void hapticImpact()
                   void createNotification({
                     title: "MrSun",
                     short: "Reminder set!",
