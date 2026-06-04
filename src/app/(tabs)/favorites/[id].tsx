@@ -1,8 +1,10 @@
 import { Stack, useLocalSearchParams } from "expo-router"
 import { StyleSheet, View } from "react-native"
 
+import Card from "#design/elements/Card"
+import Screen from "#design/elements/Screen"
 import Typography from "#design/elements/Typography"
-import { colors, spacing } from "#design/foundations"
+import { spacing } from "#design/foundations"
 import { useFavorites } from "#shared/favorites"
 import { CurrentSun, Forecast } from "#shared/sun"
 
@@ -15,16 +17,25 @@ const App: React.FC = () => {
     <>
       <Stack.Screen options={{ title: location?.name ?? `Favorite ${id}` }} />
 
-      <View style={styles.container}>
+      <Screen scroll={false}>
         {location ? (
           <>
+            <View style={styles.header}>
+              <Typography variant="label">Favorite location</Typography>
+              <Typography variant="title">{location.name}</Typography>
+            </View>
             <CurrentSun location={location} />
             <Forecast location={location} />
           </>
         ) : (
-          <Typography>Favorite not found</Typography>
+          <Card>
+            <Typography variant="large">Favorite not found</Typography>
+            <Typography variant="muted">
+              This saved location is no longer available.
+            </Typography>
+          </Card>
         )}
-      </View>
+      </Screen>
     </>
   )
 }
@@ -32,11 +43,7 @@ const App: React.FC = () => {
 export default App
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: spacing.between,
-    backgroundColor: colors.page,
-    alignItems: "center",
-    justifyContent: "center",
+  header: {
+    gap: spacing.xs,
   },
 })

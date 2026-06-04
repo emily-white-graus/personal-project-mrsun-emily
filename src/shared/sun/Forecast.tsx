@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react"
 import { FlatList, StyleSheet, View } from "react-native"
 
+import Card from "#design/elements/Card"
 import Typography from "#design/elements/Typography"
-import { colors, shadows, shapes, spacing } from "#design/foundations"
+import { colors, shapes, spacing } from "#design/foundations"
 
 import { type SunForecastData, fetchSunForecast } from "./sunApi"
 import { getBestViewingWindow, getSunsetRating } from "./sunsetPrediction"
@@ -70,19 +71,19 @@ export const Forecast: React.FC<{
   }, [refresh])
 
   return (
-    <View style={styles.card}>
+    <Card style={styles.card}>
       <View style={styles.title}>
         <Typography variant="label">Sunset forecast</Typography>
       </View>
 
       <FlatList
-        style={styles.list}
         data={data}
-        refreshing={loading}
-        onRefresh={refresh}
+        keyExtractor={(item) => item.day}
         onEndReached={more}
         onEndReachedThreshold={0.5}
-        keyExtractor={(item) => item.day}
+        onRefresh={refresh}
+        refreshing={loading}
+        style={styles.list}
         renderItem={({ item }) => {
           const window = getBestViewingWindow(item.sunset)
           const rating = getSunsetRating(item.daylight, item.sunshine)
@@ -90,13 +91,19 @@ export const Forecast: React.FC<{
           return (
             <View style={styles.day}>
               <View style={styles.dayHeader}>
-                <Typography variant="label">{formatDay(item.day)}</Typography>
-                <Typography variant="large">
-                  {rating.score}/10 {rating.label}
-                </Typography>
+                <View>
+                  <Typography variant="label">{formatDay(item.day)}</Typography>
+                  <Typography variant="title">
+                    {formatTime(item.sunset)}
+                  </Typography>
+                </View>
+                <View style={styles.rating}>
+                  <Typography variant="caption" style={styles.ratingText}>
+                    {rating.score}/10 {rating.label}
+                  </Typography>
+                </View>
               </View>
 
-              <Typography variant="title">{formatTime(item.sunset)}</Typography>
               <Typography variant="muted">
                 Best time: {formatTime(window.start.toISOString())} -{" "}
                 {formatTime(window.end.toISOString())}
@@ -108,31 +115,23 @@ export const Forecast: React.FC<{
           )
         }}
       />
-    </View>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
   card: {
-    width: "100%",
     maxHeight: 420,
-    padding: spacing.inside,
-    margin: spacing.between,
-    borderRadius: shapes.borderRadius,
-    borderWidth: 1,
-    borderColor: colors.border,
-    backgroundColor: colors.background,
-    ...shadows.main,
   },
   title: {
-    alignSelf: "flex-start",
-    marginBottom: spacing.between,
+    marginBottom: spacing.md,
   },
   list: {
     width: "100%",
   },
   day: {
-    paddingVertical: spacing.between,
+    gap: spacing.xs,
+    paddingVertical: spacing.md,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
@@ -140,6 +139,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: spacing.between,
+    gap: spacing.md,
+  },
+  rating: {
+    flexShrink: 0,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: shapes.pillRadius,
+    backgroundColor: colors.surface,
+  },
+  ratingText: {
+    color: colors.accent,
+    fontWeight: "700",
   },
 })

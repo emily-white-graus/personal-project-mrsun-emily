@@ -1,6 +1,7 @@
 import { StyleSheet, View } from "react-native"
 
 import Typography from "#design/elements/Typography"
+import { colors, shapes, spacing } from "#design/foundations"
 
 type FormGroupProps = {
   label: string
@@ -10,7 +11,9 @@ type FormGroupProps = {
 const FormGroup: React.FC<FormGroupProps> = ({ label, children }) => {
   return (
     <View style={styles.group}>
-      <Typography style={styles.label}>{label}</Typography>
+      <Typography variant="label" style={styles.label}>
+        {label}
+      </Typography>
       <View style={styles.value}>{children}</View>
     </View>
   )
@@ -20,15 +23,17 @@ export default FormGroup
 
 const styles = StyleSheet.create({
   group: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 8,
-    paddingHorizontal: 12,
+    gap: spacing.xs,
+    padding: spacing.md,
+    borderRadius: shapes.fieldRadius,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
   },
   label: {
-    flex: 1,
+    //
   },
   value: {
-    flex: 1,
+    //
   },
 })

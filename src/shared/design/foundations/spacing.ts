@@ -1,2 +1,5 @@
-export const between = 20
-export const inside = 30
+export const xs = 8
+export const sm = 12
+export const md = 16
+export const lg = 22
+export const xl = 30

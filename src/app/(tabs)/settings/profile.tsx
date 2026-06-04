@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 
+import Card from "#design/elements/Card"
 import TextField from "#design/elements/fields/Text"
 import ToggleField from "#design/elements/fields/Toggle"
 import FormGroup from "#design/elements/FormGroup"
+import Screen from "#design/elements/Screen"
 import Typography from "#design/elements/Typography"
-import { colors } from "#design/foundations"
+import { spacing } from "#design/foundations"
 import { hapticImpact } from "#shared/haptics"
 import { createNotification } from "#shared/notification"
 
@@ -29,10 +31,15 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <>
-      <View style={styles.container}>
+    <Screen>
+      <View style={styles.header}>
         <Typography variant="title">Profile</Typography>
+        <Typography variant="muted">
+          Manage your display name and alerts.
+        </Typography>
+      </View>
 
+      <Card>
         <View style={styles.form}>
           <FormGroup label="Name">
             <TextField onChange={setName} value={name} />
@@ -42,22 +49,19 @@ const App: React.FC = () => {
             <ToggleField onChange={setNotifications} value={notifications} />
           </FormGroup>
         </View>
-      </View>
-    </>
+      </Card>
+    </Screen>
   )
 }
 
 export default App
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.page,
-    alignItems: "center",
-    justifyContent: "center",
+  header: {
+    gap: spacing.xs,
   },
   form: {
     width: "100%",
-    maxWidth: 360,
+    gap: spacing.md,
   },
 })

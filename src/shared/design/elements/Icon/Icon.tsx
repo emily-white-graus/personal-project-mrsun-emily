@@ -4,6 +4,8 @@ import { StyleSheet } from "react-native"
 const icons = {
   home: "home",
   favorites: "star",
+  location: "map-marker",
+  next: "chevron-right",
   settings: "gear",
 } as const
 

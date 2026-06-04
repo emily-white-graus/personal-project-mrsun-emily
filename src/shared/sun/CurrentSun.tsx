@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
 
 import Card from "#design/elements/Card"
+import Icon from "#design/elements/Icon"
 import Typography from "#design/elements/Typography"
-import { spacing } from "#design/foundations"
+import { colors, spacing } from "#design/foundations"
 
 import { type CurrentSunData, fetchCurrentSun } from "./sunApi"
 import { type SunLocation } from "./types"
@@ -46,29 +47,34 @@ export const CurrentSun: React.FC<{
   }, [location])
 
   return (
-    <Card>
+    <Card variant="hero">
       <View style={styles.current}>
-        <Typography variant="title">{formatTime(data?.sunset)}</Typography>
-        <Typography variant="muted">{location.name}</Typography>
-        <Typography variant="label">Sunset today</Typography>
+        <View style={styles.location}>
+          <Icon color={colors.textOnAccent} name="location" size={16} />
+          <Typography variant="inverse">{location.name}</Typography>
+        </View>
+        <Typography variant="inverseLabel">Sunset today</Typography>
+        <Typography variant="hero">{formatTime(data?.sunset)}</Typography>
       </View>
 
       <View style={styles.stats}>
         <View style={styles.stat}>
-          <Typography variant="large">{formatTime(data?.sunrise)}</Typography>
-          <Typography variant="label">Sunrise</Typography>
+          <Typography variant="large" style={styles.inverseStat}>
+            {formatTime(data?.sunrise)}
+          </Typography>
+          <Typography variant="inverseLabel">Sunrise</Typography>
         </View>
         <View style={styles.stat}>
-          <Typography variant="large">
+          <Typography variant="large" style={styles.inverseStat}>
             {formatDuration(data?.daylight)}
           </Typography>
-          <Typography variant="label">Daylight</Typography>
+          <Typography variant="inverseLabel">Daylight</Typography>
         </View>
         <View style={styles.stat}>
-          <Typography variant="large">
+          <Typography variant="large" style={styles.inverseStat}>
             {formatDuration(data?.sunshine)}
           </Typography>
-          <Typography variant="label">Sunshine</Typography>
+          <Typography variant="inverseLabel">Sunshine</Typography>
         </View>
       </View>
     </Card>
@@ -76,7 +82,26 @@ export const CurrentSun: React.FC<{
 }
 
 const styles = StyleSheet.create({
-  current: { alignItems: "center", marginBottom: spacing.inside },
-  stats: { flexDirection: "row" },
-  stat: { flex: 1, alignItems: "center" },
+  current: {
+    gap: spacing.xs,
+    marginBottom: spacing.lg,
+  },
+  location: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+  },
+  stats: {
+    flexDirection: "row",
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255, 253, 248, 0.45)",
+    paddingTop: spacing.md,
+  },
+  stat: {
+    flex: 1,
+    gap: spacing.xs,
+  },
+  inverseStat: {
+    color: colors.textOnAccent,
+  },
 })
