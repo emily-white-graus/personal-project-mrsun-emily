@@ -6,7 +6,7 @@ describe("Sun > searchSunLocations", () => {
   })
 
   it("maps geocoding results to sun locations", async () => {
-    const fetch = jest.spyOn(global, "fetch").mockResolvedValue({
+    const fetch = jest.spyOn(globalThis, "fetch").mockResolvedValue({
       json: async () => ({
         results: [
           {
@@ -33,7 +33,7 @@ describe("Sun > searchSunLocations", () => {
   })
 
   it("returns an empty array when there are no results", async () => {
-    jest.spyOn(global, "fetch").mockResolvedValue({
+    jest.spyOn(globalThis, "fetch").mockResolvedValue({
       json: async () => ({}),
     } as Response)
 

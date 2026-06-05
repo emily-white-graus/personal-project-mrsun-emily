@@ -4,7 +4,7 @@ import { CurrentSun } from "./CurrentSun"
 
 describe("Sun > CurrentSun", () => {
   beforeEach(() => {
-    jest.spyOn(global, "fetch").mockResolvedValue({
+    jest.spyOn(globalThis, "fetch").mockResolvedValue({
       json: async () => ({
         daily: {
           sunrise: ["2026-06-01T06:20"],

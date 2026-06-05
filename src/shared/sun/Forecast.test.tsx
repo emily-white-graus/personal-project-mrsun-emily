@@ -4,7 +4,7 @@ import { Forecast } from "./Forecast"
 
 describe("Sun > Forecast", () => {
   beforeEach(() => {
-    jest.spyOn(global, "fetch").mockResolvedValue({
+    jest.spyOn(globalThis, "fetch").mockResolvedValue({
       json: async () => ({
         daily: {
           time: ["2026-06-01"],

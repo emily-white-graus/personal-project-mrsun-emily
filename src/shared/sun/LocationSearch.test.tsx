@@ -8,7 +8,7 @@ describe("Sun > LocationSearch", () => {
   })
 
   it("searches cities and selects the first result", async () => {
-    jest.spyOn(global, "fetch").mockResolvedValue({
+    jest.spyOn(globalThis, "fetch").mockResolvedValue({
       json: async () => ({
         results: [
           {
